@@ -10,3 +10,15 @@ let rec partitionne_bis l i j  = match l with [] -> (i, j) |x::[] -> (x::i, j) |
    
 
 let partitionne l = partitionne_bis l [] [];; 
+
+# Fonction pour inverser une liste nous permet de gagner du temps en réutilisant partitionne qui séparait correctement la liste en deux liste inverses à celles voulues
+
+let rec reverse_bis l lr = match l with [] -> lr | x::r -> reverse_bis r (x::lr);;
+
+let reverse l= reverse_bis l [];;
+
+let rec fusionne_bis inf l1 l2 l = match (l1,l2) with ([],_) -> (reverse l2) @ l | (_,[]) -> (reverse l1) @ l | (x1::r1,x2::r2) -> if inf x1 x2 then fusionne_bis inf r1 l2 (x1::l) else fusionne_bis inf l1 r2 (x2::l);;
+
+let fusionne inf l1 l2 = reverse (fusionne_bis inf l1 l2 []);;
+
+let tri_partition_fusion inf l = let (l1,l2) = partitionne l in fusionne inf ( tri_selection_min inf l1 ) ( tri_selection_min inf l2);;
