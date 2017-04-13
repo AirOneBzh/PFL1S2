@@ -11,3 +11,5 @@ let rec reverse l lr = match l with [] -> lr | x::r -> reverse r (x::lr);;
 let rec fusionne inf l1 l2 l = match (l1,l2) with ([],_) -> (reverse l2 []) @ l | (_,[]) -> (reverse l1 []) @ l | (x1::r1,x2::r2) -> if inf x1 x2 then fusionne inf r1 l2 (x1::l) else fusionne inf l1 r2 (x2::l);;
 
 let tri inf l = let (l1,l2) = partitionne l [] [] in reverse ( fusionne inf ( tri_selection_min inf l1 ) ( tri_selection_min inf l2) [] ) [];;
+
+let rec suppr_doublons l = match l with [] -> [] |[x] -> [x] |x::y::r -< if x == y then suppr_doublons (y::r) else suppr_doublons (x::y::(suppr_doublons r));;
