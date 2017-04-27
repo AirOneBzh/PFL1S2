@@ -58,3 +58,10 @@ val tri : ('a -> 'a -> bool) -> 'a list -> 'a list
 (* ( tri inf l ) permet d'appeler tour à tour les fonctions
         précédentes dans le but de trier rapidement une liste
         par la méthode de partition fusion               *)
+
+(****************************************************************)
+
+val suppr_doublons : 'a list -> 'a list
+
+(* ( suppr_doublons l )  retourne la liste triée l sans
+                      les éventuels doublons *)

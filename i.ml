@@ -1,0 +1,11 @@
+#load "point.cmo";;
+open Point;;
+#load "list_sup.cmo";;
+open List_sup;;
+#load "graham.cmo";;
+open Graham;;
+#load "pile.cmo";;
+open Pile;;
+init();;
+let l = gen_rectangle 50;;
+#use "graham.ml";;
