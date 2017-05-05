@@ -18,13 +18,13 @@ match l with
 [] -> y
 |z::r -> if infg x y z then tri_points_bis r x y else tri_points_bis r x z;;
 
-let rec tri_points_ter l ln = let x=min_list infc l in let y = tri_points_bis (supprime x l) x {x=x.x+2;y=x.y-1} in
+let rec tri_points_ter l ln =
 match l with
-[]-> failwith "erreur"
-| [x]-> ln
-| n::r -> tri_points_ter (supprime y l) (ln@[y]);;
+[] -> ln
+| n::[] -> ln@[n]
+| n::s::r -> let b=min_list infc l in let y = tri_points_bis (supprime b l) b s in tri_points_ter (supprime y l) (ln@[y]);;
 
-let tri_points l = suppr_doublons([min_list infc l]@(tri_points_ter l []));;
+let tri_points l = let b=min_list infc l in let l2 = tri_points_ter (tri infc l) [] in b::suppr_doublons(l2);;
 (*)
   let rec algo_graham l p =
   let b = top p in
@@ -33,4 +33,3 @@ let tri_points l = suppr_doublons([min_list infc l]@(tri_points_ter l []));;
   [] -> p
   | x::r -> if det x a b <= 0 then algo_graham r (empiler x p) else algo_graham r p ;;
 *)
-#use "f.ml";;
