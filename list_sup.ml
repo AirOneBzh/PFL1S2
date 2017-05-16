@@ -26,3 +26,21 @@ let tri inf l = let (l1,l2) = partitionne l [] [] in reverse ( fusionne inf ( tr
 let rec suppr_doublons l = match l with [] -> l
                                         | [x] -> [x]
                                         |x::y::r -> if x = y then suppr_doublons (y::r) else x::( suppr_doublons (y::r));;
+let rec separe_inf_eq_sup_bis comp  x l i m f  = match l with
+[] ->(i, m, f)
+|n::r -> if comp n x then  separe_inf_eq_sup_bis comp x r (n::i) m f
+else if n=x then  separe_inf_eq_sup_bis comp x r i (n::m) f
+else  separe_inf_eq_sup_bis comp x r i m (n::f);;
+
+let  separe_inf_eq_sup comp x l =  separe_inf_eq_sup_bis comp x l [] [] [];;
+
+let rec tri_pivot_bis infeq (i, m, f) = match (i,f) with
+([], []) -> m
+|(ti::qi,tf::qf ) -> (tri_pivot_bis infeq (separe_inf_eq_sup infeq ti i))@m@(tri_pivot_bis infeq (separe_inf_eq_sup infeq tf f)) 
+|(ti::qi,[])->  (tri_pivot_bis infeq (separe_inf_eq_sup infeq ti i))@m
+|([], tf::qf) ->  m@(tri_pivot_bis infeq (separe_inf_eq_sup infeq tf f));;
+
+let tri_pivot infeq l = match l with
+[] -> l
+|x::r ->  tri_pivot_bis infeq (separe_inf_eq_sup infeq x l);;                                        
+                                        
