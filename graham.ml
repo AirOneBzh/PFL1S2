@@ -25,11 +25,16 @@ match l with
 | n::s::r -> let b=min_list infc l in let y = tri_points_bis (supprime b l) b s in tri_points_ter (supprime y l) (ln@[y]);;
 
 let tri_points l = let b=min_list infc l in let l2 = tri_points_ter (tri infc l) [] in b::suppr_doublons(l2);;
-(*)
-  let rec algo_graham l p =
-  let b = top p in
-  let a = subtop p in
-  match l with
-  [] -> p
-  | x::r -> if det x a b <= 0 then algo_graham r (empiler x p) else algo_graham r p ;;
-*)
+
+let rec algo_graham l pile =
+match l with
+[] -> pile
+| x::r -> let l = tri_points l in if pile = vide
+          then algo_graham r (empiler x pile)
+          else if depiler pile = vide
+               then algo_graham r (empiler x pile)
+               else  if det (top pile) (subtop pile) x < 0
+                     then algo_graham r (depiler  pile)
+                     else if det (top pile) (subtop pile) x > 0
+                          then algo_graham r (empiler x pile)
+                          else algo_graham r (empiler x (depiler pile));;
