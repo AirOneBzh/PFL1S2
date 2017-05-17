@@ -17,9 +17,12 @@ let rec partitionne l i j  = match l with [] -> (i, j)
 let rec reverse l lr = match l with [] -> lr
                                     | x::r -> reverse r (x::lr);;
 
-let rec fusionne inf l1 l2 l = match (l1,l2) with ([],_) -> (reverse l2 []) @ l
-                                                  | (_,[]) -> (reverse l1 []) @ l
-                                                  | (x1::r1,x2::r2) -> if inf x1 x2 then fusionne inf r1 l2 (x1::l) else fusionne inf l1 r2 (x2::l);;
+let rec fusionne inf l1 l2 = match (l1,l2) with ([],[]) -> []
+	                                              |(_,[]) -> l1
+                                                |([],_) -> l2 
+	                                              |(x::r, y::s) -> if inf x y then x::(fusionne inf r l2) 
+                                                                else y::(fusionne inf l1 s);;
+
 
 let tri inf l = let (l1,l2) = partitionne l [] [] in reverse ( fusionne inf ( tri_selection_min inf l1 ) ( tri_selection_min inf l2) [] ) [];;
 
