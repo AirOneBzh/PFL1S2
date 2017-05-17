@@ -38,3 +38,5 @@ match l with
                      else if det (top pile) (subtop pile) x > 0
                           then algo_graham r (empiler x pile)
                           else algo_graham r (empiler x (depiler pile));;
+
+let env_graham liste = let l = tri_points liste in algo_graham l (vide);;
